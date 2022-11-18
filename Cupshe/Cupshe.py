@@ -3,6 +3,8 @@ import pandas as pd
 from bs4 import BeautifulSoup as bs
 from requests import Session
 s=Session()
+
+
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0',
     'Accept': 'application/json, text/plain, */*',
