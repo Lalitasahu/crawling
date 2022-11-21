@@ -91,4 +91,3 @@ df.to_excel('121faves.xlsx',index=False)
 print(all_data)
 
 
-

@@ -120,9 +120,6 @@ def crawl_list(row):
         else:
             next_page = False
 
-    
-
-
 df = pd.read_excel('input.xlsx')
 # for i in range(len(df)):
 for i in range(1):
