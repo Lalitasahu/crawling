@@ -40,7 +40,7 @@ params = {
 
 def crawl_detail(url):
     print(url)
-    r=s.get(url,headers=headers,cookies=cookies)
+    r=s.get(url,headers=headers)
     
     soup=bs(r.text,'html.parser')
     # print(soup.prettify())

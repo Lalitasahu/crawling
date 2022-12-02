@@ -3,6 +3,7 @@ import re
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 from requests import Session
+from lxml import html
 s=Session()
 
 cookies = {
@@ -64,6 +65,40 @@ def crawl_detail(url):
 
     }
 all_data=[]
+
+
+
+def parse_with_xpath(response):
+    tree = html.fromstring(response.text)
+    all_products = []
+    products = tree.xpath('//div[@class="col-6 col-md-3 common__product-gap"]')
+    for product in products:
+        title =  "".join(product.xpath('.//a[@class="product-snippet__title-normal two_line_text_truncate dj_skin_product_list_title"]//text()'))
+        link =  "".join(product.xpath('.//a[@class="product-snippet__title-normal two_line_text_truncate dj_skin_product_list_title"]/@href'))
+        list_price = "".join(product.xpath('.//span[@class="text-truncate dj_skin_product_price money"]//text()'))
+        mrp = "".join(product.xpath('.//del[@class="text-truncate dj_skin_product_compare_at_price money"]//text()')).strip()
+
+        all_products.append({
+            'product_url':link,
+            'title':title,
+            'list_price':list_price,
+            'mrp':mrp,
+        })
+    
+    """
+    "".join(tree.xpath('//div[@class="product-info__desc-tab-content"]//tr//td[@style="width: 25%;" and contains(string(),"Color")]/following-sibling::td//text()'))
+    """
+
+    
+    
+    return all_products
+
+
+
+
+
+
+
 def crawl_list():
     total=628//48
     for page in range(total+1):
