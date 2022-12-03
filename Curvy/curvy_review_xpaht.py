@@ -48,7 +48,7 @@ def get_parms(url):
         'productName': prd_name,
         'productType': productType,
         'productSKU': productSKU,
-        # 'page': '1',
+        'page': '1',
         'apiKey': apiKey,
         'storeUrl': storeUrl,
         'take': '5',
@@ -61,23 +61,32 @@ def review_with_xpath(row):
     # while nextpage:
         url = row['link']
         print(url)
-        params = get_parms(url)
-        # params['page'] = '4'
-        response = requests.get('https://stamped.io/api/widget', params=params, headers=headers)
-        print(response)
-        js = response.json()
-        tree = html.fromstring(js['widget'])
-        # print(tree)
-        userName = tree.xpath('//strong[@class="author"]//text()')# list conver into with join ||
-        title = tree.xpath('//h3//text()')
-        reviews = tree.xpath('//p[@class="stamped-review-content-body"]//text()')
-        Date = tree.xpath('//div[@class="created"]//text()')
-        for UN,T,R,D in zip(userName,title,reviews,Date):
-            d={'userName':UN,'title':T,'reviews':R,'Date':D,'Pro_URL':url}
-            print(d)
-            allreviews.append(d)
-    # if nextpage = 
+        total=int(63/5)
+        for j in range(1,total+1):
+            params = get_parms(url)
+            params['page'] = str(j)
+            response = requests.get('https://stamped.io/api/widget', params=params, headers=headers)
+            # print(response)
+            js = response.json()
+            tree = html.fromstring(js['widget'])
+            try:
 
+                for i in tree.xpath('//div[@class="stamped-review"]'):
+                    userName = i.xpath('.//strong[@class="author"]//text()')
+                    title = i.xpath('.//h3//text()')[0]
+                    review = i.xpath('.//p[@class="stamped-review-content-body"]//text()')[0]
+                    date = i.xpath('.//div[@class="created"]//text()')[0]
+                    allreviews.append({
+                        'userName':userName,
+                        'title':title,
+                        'review':review,
+                        'date':date,
+                        'URL':url
+
+                })
+            except:
+                pass
+      
 
 
 df = pd.read_excel('Curvy_xpath.xlsx')
@@ -85,6 +94,6 @@ for i in range(len(df)):
 # for i in range(1):
     row = df.iloc[i].to_dict()
     review_with_xpath(row)
-
 df = pd.DataFrame(allreviews)
-df.to_excel('curvy_review.xlsx',index=False)
+df.to_excel('curvy_review1.xlsx',index=False)
+print(allreviews)
