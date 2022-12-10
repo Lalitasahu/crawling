@@ -94,6 +94,8 @@ for i in range(len(df)):
 # for i in range(1):
     row = df.iloc[i].to_dict()
     review_with_xpath(row)
+
+    
 df = pd.DataFrame(allreviews)
 df.to_excel('curvy_review1.xlsx',index=False)
 print(allreviews)
