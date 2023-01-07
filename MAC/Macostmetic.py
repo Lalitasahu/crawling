@@ -127,9 +127,9 @@ def listpage(url):
         data = {
             'Product_id':Product_id,
             'Product_URL':Product_URL,
-            'number_of_reviews':Number_of_reviews,
-            'Average_rating':Average_rating,
-            'images':images
+            # 'number_of_reviews':Number_of_reviews,
+            # 'Average_rating':Average_rating,
+            # 'images':images
         }
         data.update(detail)
         alldata.append(data)
@@ -137,8 +137,8 @@ def listpage(url):
 
 
 # url = 'https://www.maccosmetics.in/products/27772/products/makeup/eyes/kajal'
-# url = "https://www.maccosmetics.in/products/13854/products/Makeup/Lips/Lipstick"
-url = 'https://www.maccosmetics.in/products/27854/products/skincare/prep-prime-fix'
+url = "https://www.maccosmetics.in/products/13854/products/Makeup/Lips/Lipstick"
+# url = 'https://www.maccosmetics.in/products/27854/products/skincare/prep-prime-fix'
 
 listpage(url)
 df = pd.DataFrame(alldata)
