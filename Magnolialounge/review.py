@@ -35,6 +35,7 @@ def review(url):
 
 
         data = {
+            'landingUrl':row['link'],
             'name':name,
             'sub_title':sub_title,
             'comment':comment,

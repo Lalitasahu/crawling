@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup as bs
 import pandas as pd
 from lxml import html
 import concurrent.futures
+import time
+import random
+
 s = Session()
 s.headers['user-agent']='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0'
 
@@ -22,12 +25,24 @@ params = {
 allreviews = []
 def review(url):
     url = row['link']
-    # print(row['link'])
+    time.sleep(random.randrange(1,4))
     r = s.get(url)
+    print(url)
     soup = bs(r.text,'html.parser')
-    product_id = re.search('ProductID: (.*?),',r.text).group(1)
-    product_name = soup.find('div','breadcrumbs-inner').find_all('span')[1].text.strip()
-    productSKU = re.search('"sku":"(.*?)",',r.text).group(1)
+    try:
+        product_id = re.search('ProductID: (.*?),',r.text).group(1)
+    except:
+        product_id = ''
+    
+    try:
+        product_name = soup.find('div','breadcrumbs-inner').find_all('span')[1].text.strip()
+    except:
+        product_name = ''
+
+    try:
+        productSKU = re.search('"sku":"(.*?)",',r.text).group(1)
+    except:
+        productSKU = ''
     page = 1
     
     while True:
@@ -68,7 +83,8 @@ def review(url):
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
 
-    df = pd.read_excel('bluebungalow/blue14_detailpage.xlsx')
+    df = pd.read_excel('blue14_detailpage.xlsx')
+    # df = pd.read_excel('bluebungalow/blue14_detailpage.xlsx')
     for i in range(len(df)):
     # for i in range(2):
         row = df.iloc[i].to_dict()
