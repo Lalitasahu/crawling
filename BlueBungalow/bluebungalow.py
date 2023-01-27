@@ -96,10 +96,6 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
 # df = pd.DataFrame(alldata)
 # df.to_excel('bluebungalow_listpage.xlsx',index=False)
 
-# url = 'https://bluebungalow.com.au/collections/dresses'
-# url ='https://bluebungalow.com.au/collections/jewellery'
-# listpage(url)
-
 
     df = pd.read_excel('BlueBungalow/bluebungalow_listpage.xlsx').drop_duplicates(['pro_id'])
     for i in range(len(df)):
