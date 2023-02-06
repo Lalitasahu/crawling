@@ -26,7 +26,7 @@ headers = {
     # 'TE': 'trailers',
 }
 
-keyword = 'web-crawler'
+keyword = 'excel'
 alldata = []
 def crwal_list():
     page =  1
@@ -72,3 +72,9 @@ crwal_list()
 df = pd.DataFrame(alldata)
 df.to_excel('naukri.xlsx', index=False)
 
+
+
+#  crwal_list()
+#   File "C:\Users\Lalita Sahu\Desktop\desktop\crawlling\Naukri\Naukri.py", line 53, in crwal_list
+#     jdURL = 'https://www.naukri.com'+product.get('jdURL')
+# TypeError: can only concatenate str (not "NoneType") to str
