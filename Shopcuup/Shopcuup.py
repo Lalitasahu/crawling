@@ -4,6 +4,25 @@ from bs4 import BeautifulSoup as bs
 from requests import Session
 import pandas as pd
 s = Session()
+s.headers['user-agent']='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0'
+
+def allUrl():
+    url = 'https://shopcuup.com'
+    r = s.get(url)
+    soup = bs(r.text,'html.parser')
+    sublink = [i.find_all('a') for i in soup.find_all('ul','sub_sub_links')]
+    for j in sublink:
+        for k in j:
+            # 9,10,19
+            sub_link = 'https://shopcuup.com'+k.get('href')
+            sub_link_name = k.text
+            data = {
+                'sub_link':sub_link,
+                'sub_link_name':sub_link_name
+            }
+            # print(data)
+            allurls.append(data)
+
 
 
 def detailpage(row):
@@ -45,16 +64,15 @@ def detailpage(row):
     detailpagedata.append(data)
 
 
-def listpage(url):
-    r = s.get(url)
+def listpage(row):
+    r = s.get(row['sub_link'])
     cat_id = re.search('"rid":(.*?)};',r.text).group(1)
-    brand_type = url.split('/')[-1].split('?')[0]
+    brand_type = row['sub_link'].split('/')[-1].split('?')[0]
     page = 1
     begin = 56
     nextpage = True
     while nextpage:
         url = f'https://c22xk5.a.searchspring.io/api/search/search.json?userId=c5b7242c-c800-4cd4-8bb1-5e26edeea80a&domain=https://shopcuup.com/collections/{brand_type}?page={page}&siteId=c22xk5&page={page}&resultsPerPage={begin}&bgfilter.collection_id={cat_id}&redirectResponse=full&resultsFormat=native'
-        
         r = s.get(url)
         js = r.json()
         if page >= js['pagination']['totalPages']:
@@ -71,6 +89,8 @@ def listpage(url):
             images = i.get('images')
 
             data = {
+                'landingpageUrl':row['sub_link'],
+                'Category':row['sub_link_name'],
                 'name':name,
                 'id':id,
                 'brand':brand,
@@ -79,11 +99,13 @@ def listpage(url):
                 'product_type':product_type,
                 'images':images
             }
-            print(data)
+            # print(data)
             listpagedata.append(data)
 
         page += 1
         # begin += 56
+
+allurls = []
 detailpagedata = []
 listpagedata = []
 
@@ -93,13 +115,19 @@ for i in range(len(df)):
 # for i in range(2):
     row = df.iloc[i].to_dict()
     detailpage(row)
-
 df = pd.DataFrame(detailpagedata)
 df.to_excel('detailpagedata.xlsx',index=False)
 
 
+# df = pd.read_excel('Urls_all_cate.xlsx').drop_duplicates(['sub_link'])
+# for i in range(len(df)):
+# # for i in range(2):
+#     row = df.iloc[i].to_dict()
+#     listpage(row)
+# df = pd.DataFrame(listpagedata)
+# df.to_excel('shopcuup.xlsx', index=False)
 
-url = 'https://shopcuup.com/collections/the-balconette?page=1'
-# listpage(url)
-df = pd.DataFrame(listpagedata)
-df.to_excel('shopcuup.xlsx', index=False)
+
+# allUrl()
+# df = pd.DataFrame(allurls)
+# df.to_excel('Urls_all_cate.xlsx',index=False)
