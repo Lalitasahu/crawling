@@ -129,15 +129,15 @@ def crawling_P_level(url):
     pdp_data.append(d)
     print(d)
 
+# C:\Users\Lalita Sahu\Desktop\desktop\crawlling\Lenovo\53_url_panding.xlsx
 
-
-df = pd.read_excel("Lenovo_us_urls.xlsx", sheet_name='Sheet1',engine='openpyxl')
+df = pd.read_excel("53_url_panding.xlsx", sheet_name='Sheet1',engine='openpyxl')
 print(df)
 with concurrent.futures.ThreadPoolExecutor(max_workers =10) as executor:
     for i in range(len(df)):
     # for i in range(20):
         cb = df.iloc[i] 
-        url = str(cb["pro_url"])
+        url = str(cb["URL"])
         # pro_id =str(c["pro_id"])
         executor.submit(crawling_P_level,url)
 # for i in range(len(df)):

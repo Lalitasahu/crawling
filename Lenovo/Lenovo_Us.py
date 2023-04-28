@@ -14,14 +14,15 @@ def listpage():
     page = 1
     nextpage = True
     while nextpage:
-        url = 'https://www.lenovo.com/us/en/laptops/subseries-results?visibleDatas=993:Creativity%20%26%20Entertainment'
-        urlapi = 'https://openapi.lenovo.com/us/en/ofp/search/dlp/product/query/get/_tsc?pageFilterId=a7b024c8-a164-4c56-b65e-0c20fe323ada&subSeriesCode=&params=%7B%22classificationGroupIds%22%3A%22400001%22%2C%22pageFilterId%22%3A%22a7b024c8-a164-4c56-b65e-0c20fe323ada%22%2C%22facets%22%3A%5B%7B%22facetId%22%3A%22993%22%2C%22selectedValues%22%3A%22Creativity%20%26%20Entertainment%22%7D%5D%2C%22page%22%3A%221%22%2C%22pageSize%22%3A20%2C%22init%22%3Atrue%2C%22sorts%22%3A%5B%22bestSelling%22%5D%2C%22version%22%3A%22v2%22%2C%22subseriesCode%22%3A%22%22%7D'
+        url = 'https://www.lenovo.com/us/en/laptops/subseries-results?visibleDatas=993:Students'
+        urlapi = 'https://openapi.lenovo.com/us/en/ofp/search/dlp/product/query/get/_tsc?pageFilterId=a7b024c8-a164-4c56-b65e-0c20fe323ada&subSeriesCode=&params=%7B%22classificationGroupIds%22%3A%22400001%22%2C%22pageFilterId%22%3A%22a7b024c8-a164-4c56-b65e-0c20fe323ada%22%2C%22facets%22%3A%5B%7B%22facetId%22%3A%22993%22%2C%22selectedValues%22%3A%22Students%22%7D%5D%2C%22page%22%3A%221%22%2C%22pageSize%22%3A20%2C%22init%22%3Atrue%2C%22sorts%22%3A%5B%22bestSelling%22%5D%2C%22version%22%3A%22v2%22%2C%22subseriesCode%22%3A%22%22%7D'
         r = s.get(urlapi)
         # print(r,r.url)
         js = r.json()
-        if js['data']['page'] < js['data']['pageCount']:
-            nextpage = False
+        # if js['data']['page'] < js['data']['pageCout']:
+        #     nextpage = False
         products =  js['data']['data'][0]['products']
+        # products =  js['data']['data']
         # print(products.keys())
         for product in range(len(products)):
             id = products[product].get('id')
@@ -46,7 +47,8 @@ def listpage():
                 'ratingStar':ratingStar,
                 'commentCount':commentCount,
                 'marketingShortDescription':marketingShortDescription,
-                'image':image
+                'image':image,
+                'category':'laptop'
                 
             }
             alldata.append(data)
@@ -57,4 +59,4 @@ def listpage():
 
 listpage()
 df = pd.DataFrame(alldata)
-df.to_excel('lenovo_us_Lap_Entertainment1.xlsx',index=False)
+df.to_excel('lenovo_uk_lap_student.xlsx',index=False)

@@ -8,9 +8,6 @@ s =  Session()
 s.headers['user-agent']='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0'
 
 
-
-import requests
-
 cookies = {
     'GlobalE_Data': '%7B%22countryISO%22%3A%22IN%22%2C%22cultureCode%22%3A%22en-GB%22%2C%22currencyCode%22%3A%22INR%22%2C%22apiVersion%22%3A%222.1.4%22%7D',
     'sid': 'lc7nFs3WC68TaR5DvEOcKzX7vIkCF5lWLQo',

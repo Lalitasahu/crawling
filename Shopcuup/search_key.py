@@ -55,6 +55,3 @@ for i in range(len(df)):
     
 df = pd.DataFrame(listpagedata)
 df.to_excel('search_category1.xlsx',index=False)
-
-'https://c22xk5.a.searchspring.io/api/search/search.json?lastViewed=10401%2C10101&userId=c5b7242c-c800-4cd4-8bb1-5e26edeea80a&domain=https%3A%2F%2Fshopcuup.com%2Fsearch%3Fq%3Ddemi%26page%3D1&siteId=c22xk5&resultsPerPage=56&bgfilter.ss_is_content=0&q=demi&resultsFormat=native'
-'https://c22xk5.a.searchspring.io/api/search/search.json?lastViewed=10401&userId=c5b7242c-c800-4cd4-8bb1-5e26edeea80a&domain=https://shopcuup.com/search?q=demi&page=1&siteId=c22xk5&page=1&resultsPerPage=56&bgfilter.ss_is_content=0&q=demi&redirectResponse=full&resultsFormat=native'
