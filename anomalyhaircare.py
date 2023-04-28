@@ -1,17 +1,3 @@
-# बोलो न क्यों ये चाँद सितारे
-# तकते हैं यूँ मुखड़े को तुम्हारे
-# छूके बदन को हवा क्यों महकी
-# रात भी है क्यों बहकी बहकी
-# kya baat h 
-# nice
-# jab se dekh raha hu
-# to ye line yaad aa gayi
-# thank you
-# kissi nh dogi
-# di to thi
-# nh aaja
-# achha
-# yes sxy pie
 
 import requests
 import re
